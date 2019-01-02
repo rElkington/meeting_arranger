@@ -13,7 +13,7 @@ def index(request):
         if form.is_valid():
             lect_name = form.cleaned_data['slect_name']
             time = form.cleaned_data['time']
-            date = form.cleaned_data['date']
+            date = form.cleaned_data['m_date']
             descript = form.cleaned_data['descript']
             return HttpResponseRedirect('/thanks/')
     else:
