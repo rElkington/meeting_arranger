@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from posts.forms import HomeForm, PostModelForm
+from posts.forms import HomeForm
+
 
 #Q 1: use TemplateView?
 #Q 2: html form or django form?
@@ -9,22 +10,11 @@ from posts.forms import HomeForm, PostModelForm
 
 def index(request):
     if request.method == 'POST':
-        form = HomeForm(request.POST)
-        if form.is_valid():
-            lect_name = form.cleaned_data['slect_name']
-            time = form.cleaned_data['time']
-            date = form.cleaned_data['m_date']
-            descript = form.cleaned_data['descript']
+        f = HomeForm(request.POST)
+        if f.is_valid():
+            f.save()
             return HttpResponseRedirect('/thanks/')
     else:
-        form = HomeForm()
-    return render(request, 'posts/index.html', {'form': form})
+        f = HomeForm()
+    return render(request, 'posts/index.html', {'form': f})
 
-def PostFormDetail(request):
-    if request.method == 'POST':
-        form = PostModelForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
-    else:
-        form = HomeForm()
-    return render(request, 'posts/index.html', {'form': form})

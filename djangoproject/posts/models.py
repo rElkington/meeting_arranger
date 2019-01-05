@@ -7,11 +7,11 @@ from datetime import datetime
 
 class meeting(models.Model):
     lect_name = models.CharField(max_length=200)
-    m_time = models.TimeField()
     m_date = models.DateField()
+    m_time = models.TimeField()
     descript = models.CharField(max_length=500)
-    attendance = models.BooleanField() #OPTIONS: PRESENT, LATE, NOT PRESENT, LEGIT EXCUSE
-    lecturer_details = models.CharField(max_length=2000)
+    #attendance = models.BooleanField(blank=True, null=True) #OPTIONS: PRESENT, LATE, NOT PRESENT, LEGIT EXCUSE
+    #lecturer_details = models.CharField(max_length=2000, blank=True, null=True)
     #include fields you don't need because it allows future scalability (e.g. venue)
 
 #GET RID OF USER TABLE AND REPLACE IT WITH TWO SEPERATE TABLES: STUDENT AND STAFF
