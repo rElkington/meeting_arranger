@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Meeting Arrangathon 3000</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/css/mdb.min.css">
 </head>
+
+
 <body>
-    <header class="container center-align">
+    <header class="container" >
         <h1>Meeting Arrangathon 3000</h1>
     </header>
+
 
     <div class="container">
         {% block content %}
         {% endblock %}
         <br>
         <div class="btn-group" align="center">
-            <button class="btn btn-primary"><a style="display:block" href="/thanks"><font color="FFFFFF">View Thanks</font></a></button>
             <button class="btn btn-default"><a style="display:block" href="/admin"><font color="FFFFFF">Admin Login</font></a></button>
         </div>
         <br>

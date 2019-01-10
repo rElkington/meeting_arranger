@@ -1,18 +1,30 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import UserManager
 
 # Create your models here.
 #DRAWBACK: you have to define foreign keys explicitly (whatever that means)
 #benefits of using migrations to autoamtically generate the table is that your less likely to make errors
 
+class staff_users(models.Model):
+    username = models.CharField(max_length=756, blank=True)
+    email_address = models.EmailField(max_length=756)
+    admin = models.BooleanField()
+
+    def __str__(self):
+        return self.username
+
 class meeting(models.Model):
-    lect_name = models.CharField(max_length=200)
+    lect_name = models.ManyToManyField(staff_users)
     m_date = models.DateField()
     m_time = models.TimeField()
     descript = models.CharField(max_length=500)
     #attendance = models.BooleanField(blank=True, null=True) #OPTIONS: PRESENT, LATE, NOT PRESENT, LEGIT EXCUSE
     #lecturer_details = models.CharField(max_length=2000, blank=True, null=True)
     #include fields you don't need because it allows future scalability (e.g. venue)
+
+    def __str__(self):
+        return self.m_date
 
 #GET RID OF USER TABLE AND REPLACE IT WITH TWO SEPERATE TABLES: STUDENT AND STAFF
 #HAVE A BOOLEAN FIELD IN STAFF FOR ADMINISTRATIVE PRIVELLAGES
@@ -22,10 +34,9 @@ class student_users(models.Model):
     username = models.CharField(max_length=100)
     email_address = models.EmailField()
 
-class staff_users(models.Model):
-    username = models.CharField(max_length=100)
-    email_address = models.EmailField()
-    admin = models.BooleanField()
+    def __str__(self):
+        return self.username
+
 
 #STEPS
 #create the models
