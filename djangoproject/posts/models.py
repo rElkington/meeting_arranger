@@ -13,9 +13,9 @@ class staff_users(models.Model):
 
     def __str__(self):
         return self.username
-
+    
 class meeting(models.Model):
-    lect_name = models.ManyToManyField(staff_users)
+    lect_name = models.ForeignKey(staff_users, on_delete=models.CASCADE)
     m_date = models.DateField()
     m_time = models.TimeField()
     descript = models.CharField(max_length=500)
@@ -24,7 +24,7 @@ class meeting(models.Model):
     #include fields you don't need because it allows future scalability (e.g. venue)
 
     def __str__(self):
-        return self.m_date
+        return self.descript
 
 #GET RID OF USER TABLE AND REPLACE IT WITH TWO SEPERATE TABLES: STUDENT AND STAFF
 #HAVE A BOOLEAN FIELD IN STAFF FOR ADMINISTRATIVE PRIVELLAGES

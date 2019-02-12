@@ -5,12 +5,6 @@ from .models import meeting, staff_users
 #forms.ChoiceField lets you do drop down menu
 #shite most of this stuff only works in chrome
 
-MY_CHOICES = (
-    ('1', 'F'),
-    ('2', 'M'),
-    ('3', 'L'),
-)
-
 class HomeForm(forms.ModelForm):
     lect_name = forms.ModelChoiceField(label='Lecturer name', queryset=staff_users.objects.all()) #is it better with widget=forms.TextInput(attrs={"placeholder": "Lecturer name"})
     m_date = forms.DateField(label='Meeting date', widget=forms.widgets.DateInput(attrs={'type': 'date'}))
