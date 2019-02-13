@@ -19,7 +19,7 @@ class meeting(models.Model):
     m_date = models.DateField()
     m_time = models.TimeField()
     descript = models.CharField(max_length=500)
-    #attendance = models.BooleanField(blank=True, null=True) #OPTIONS: PRESENT, LATE, NOT PRESENT, LEGIT EXCUSE
+    attended = models.BooleanField(blank=True, null=True) #OPTIONS: PRESENT, LATE, NOT PRESENT, LEGIT EXCUSE
     #lecturer_details = models.CharField(max_length=2000, blank=True, null=True)
     #include fields you don't need because it allows future scalability (e.g. venue)
 

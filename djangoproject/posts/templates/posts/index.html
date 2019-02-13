@@ -1,14 +1,66 @@
+
 {% extends 'posts/layout.html' %}
 
 {% block content %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+table {
+    border-collapse: collapse;
+    border-spacing: 10;
+    width: 100%;
+    border: 20px solid #fff;
+}    
+        
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+        
+tr:nth-child(even){background-color: #f2f2f2}
+</style>
+</head>
 <div class="container">
-    <h2>Arrange Meeting</h2>
-    <form method="post">
+    <h2 style="text-align: center;">Arrange Meeting</h2>
+    <form method="post" style="text-align: center;">
         {% csrf_token %}
         {{ form.as_p }}
         <br>
-        <br>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
+    <br>
+    <button onclick="myFunction()" class="btn btn-default" float="center">Show arranged meetings</button>
+    <br>
+    <div style="overflow-x:auto; display: none" id=myDIV>
+        <table>
+          <tr>
+            <th>Meeting Date</th>
+            <th>Meeting Time</th>
+            <th>Lecturer Name</th>
+            <th>Description</th>
+          </tr>
+        {% for post in entries %}
+          <tr>
+            <td>{{ post.m_date }}</td>
+            <td>{{ post.m_time }}</td>
+            <td>{{ post.lect_name }}</td>
+            <td>{{ post.descript }}</td>
+            <td><button class="btn btn-default">Edit</button></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
 </div>
+
+<script>
+    function myFunction() {
+      var x = document.getElementById("myDIV");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+</script>
+
 {% endblock %}
