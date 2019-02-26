@@ -14,10 +14,20 @@ class staff_users(models.Model):
     def __str__(self):
         return self.username
     
+class student_users(models.Model):
+    username = models.CharField(max_length=100)
+    email_address = models.EmailField()
+    password = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.username
+
+
 class meeting(models.Model):
     lect_name = models.ForeignKey(staff_users, on_delete=models.CASCADE)
     m_date = models.DateField()
     m_time = models.TimeField()
+    student_name = models.ForeignKey(student_users, on_delete=models.CASCADE, null=True)
     descript = models.CharField(max_length=500)
     attended = models.BooleanField(blank=True, null=True) #OPTIONS: PRESENT, LATE, NOT PRESENT, LEGIT EXCUSE
     #lecturer_details = models.CharField(max_length=2000, blank=True, null=True)
@@ -30,12 +40,7 @@ class meeting(models.Model):
 #HAVE A BOOLEAN FIELD IN STAFF FOR ADMINISTRATIVE PRIVELLAGES
 #the rationale for this is to avoid having two forgeing keys connecting to the same table
 #this allows the whole cacade thing
-class student_users(models.Model):
-    username = models.CharField(max_length=100)
-    email_address = models.EmailField()
 
-    def __str__(self):
-        return self.username
 
 
 #STEPS

@@ -1,0 +1,17 @@
+{% extends 'posts/layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome</h1>
+    <p>
+        You can log in here!
+    </p>
+    <h2>Login</h2>
+    <form method="post" style="text-align: left;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn btn-default">Login</button>
+    </form>
+</div>
+{% endblock %}

@@ -19,10 +19,11 @@ th, td {
         
 tr:nth-child(even){background-color: #f2f2f2}
 </style>
+
 </head>
 <div class="container">
     <h2 style="text-align: center;">Arrange Meeting</h2>
-    <form method="post" style="text-align: center;">
+    <form method="post" style="text-align: left;">
         {% csrf_token %}
         {{ form.as_p }}
         <br>
@@ -40,7 +41,7 @@ tr:nth-child(even){background-color: #f2f2f2}
             <th>Description</th>
           </tr>
         {% for post in entries %}
-          <tr>
+          <tr id=myTable>
             <td>{{ post.m_date }}</td>
             <td>{{ post.m_time }}</td>
             <td>{{ post.lect_name }}</td>
@@ -49,9 +50,11 @@ tr:nth-child(even){background-color: #f2f2f2}
           </tr>
           {% endfor %}
         </table>
-      </div>
+    </div>
+
 </div>
 
+<script sr="https://cdnjs.cloudflare.come/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
 <script>
     function myFunction() {
       var x = document.getElementById("myDIV");
@@ -61,6 +64,8 @@ tr:nth-child(even){background-color: #f2f2f2}
         x.style.display = "none";
       }
     }
+</script>
+
 </script>
 
 {% endblock %}

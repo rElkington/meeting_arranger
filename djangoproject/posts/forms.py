@@ -1,9 +1,5 @@
 from django import forms
-from .models import meeting, staff_users
-
-#widgets let you format the html for the field
-#forms.ChoiceField lets you do drop down menu
-#shite most of this stuff only works in chrome
+from .models import meeting, staff_users, student_users
 
 class HomeForm(forms.ModelForm):
     lect_name = forms.ModelChoiceField(label='Lecturer name', queryset=staff_users.objects.all()) #is it better with widget=forms.TextInput(attrs={"placeholder": "Lecturer name"})
@@ -14,3 +10,8 @@ class HomeForm(forms.ModelForm):
     class Meta:
         model = meeting
         fields = ('lect_name', 'm_date', 'm_time', 'descript')
+
+
+
+
+    
