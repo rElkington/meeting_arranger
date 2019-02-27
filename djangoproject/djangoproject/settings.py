@@ -39,7 +39,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'posts',
-    'yes_attend',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTH_USER_MODEL = 'posts.CustomUser'
 
 ROOT_URLCONF = 'djangoproject.urls'
 
@@ -134,3 +135,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/posts/'

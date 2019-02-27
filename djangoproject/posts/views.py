@@ -20,11 +20,13 @@ class HomeView(TemplateView):
     def post(self, request):
         form = HomeForm(request.POST)
         if form.is_valid():
-            instance = form.save()
+            instance = form.save(commit=False)
+            instance.student_name = request.user
+            instance.save()
 
             subject = "This is a test email"
             from_email=settings.EMAIL_HOST_USER
-            to_email = [instance.lect_name.email_address]
+            to_email = [instance.lect_name.email]
             with open(settings.BASE_DIR + "/posts/templates/posts/confirm_email.txt") as f: email_message = f.read()
             message = EmailMultiAlternatives(subject=subject, body=email_message, from_email=from_email, to=to_email)
             html_template = get_template("posts/confirm_email.html").render()
@@ -36,13 +38,14 @@ class HomeView(TemplateView):
         return render(request, self.template_name, {'form': form})
 
 
+class YesView(TemplateView):
+    template_name = 'posts/confirm_attendance.html'
 
+    def get(self, request):
+        return render(request, self.template_name)
 
-
-#Q 1: use TemplateView?
-#Q 2: html form or django form?
-    #NOTe when using django validation make them read the 
-    #documentation to check it is entirely approorpaite for the context
+    def post(self, request):
+        return render(request, self.template_name)
 
 #MEETING
 #only do write access through the server for security reasons
