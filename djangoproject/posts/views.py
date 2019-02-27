@@ -4,15 +4,16 @@ from django.views.generic import TemplateView
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.conf import settings
-from posts.forms import HomeForm
+from posts.forms import HomeForm, EditButtonForm
 from posts.models import meeting
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'posts/index.html'
 
     def get(self, request):
         form = HomeForm()
-        entries=meeting.objects.all()
+        entries = meeting.objects.filter(student_name=request.user)
         args = {'form': form, 'entries': entries}
 
         return render(request, self.template_name, args)
@@ -37,15 +38,24 @@ class HomeView(TemplateView):
         
         return render(request, self.template_name, {'form': form})
 
-
-class YesView(TemplateView):
+class YesView(LoginRequiredMixin, TemplateView):
     template_name = 'posts/confirm_attendance.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        meetingList = meeting.objects.filter(lect_name=request.user, attended_set=False)
+        form = EditButtonForm()
+        args = {'form': form, 'meetingList': meetingList}
+        return render(request, self.template_name, args)
 
     def post(self, request):
-        return render(request, self.template_name)
+        meetingList = meeting.objects.filter(lect_name=request.user, attended_set=False)
+        form = EditButtonForm(request.POST)
+        args = {'form': form, 'meetingList': meetingList}
+        if form.is_valid():
+            form.save()
+            form = EditButtonForm()
+
+        return render(request, self.template_name, args)
 
 #MEETING
 #only do write access through the server for security reasons

@@ -1,4 +1,56 @@
 {% extends 'posts/layout.html' %}
+<head>
+    <style>
+    #customers {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #customers tr:hover {background-color: #ddd;}
+    
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+    }
+    </style>
+    </head>
 {% block content %}
-<p>yo</p>
+
+<div style="overflow-x:auto">
+    <table>
+      <tr>
+        <th>Meeting Date</th>
+        <th>Meeting Time</th>
+        <th>Lecturer Name</th>
+        <th>Description</th>
+      </tr>
+
+      {% for post in meetingList %}
+      <tr id=myTable>
+        
+        <td>{{ post.m_date }}</td>
+        <td>{{ post.m_time }}</td>
+        <td>{{ post.descript }}</td>
+        <form method="post" style="text-align: left;">
+            {% csrf_token %}
+            <td>{{ form.as_p }}</td>
+            <td><button type="submit" class="btn btn-default">Submit</button></td>
+        </form>
+      </tr>
+      {% endfor %}
+
+    </table>
+</div>
+
 {% endblock %}
