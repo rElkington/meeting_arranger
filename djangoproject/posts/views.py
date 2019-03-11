@@ -42,17 +42,18 @@ class YesView(LoginRequiredMixin, TemplateView):
     template_name = 'posts/confirm_attendance.html'
 
     def get(self, request):
-        meetingList = meeting.objects.filter(lect_name=request.user, attended_set=False)
+        meet = meeting.objects.filter(lect_name=request.user, attended_set=False)
         form = EditButtonForm()
-        args = {'form': form, 'meetingList': meetingList}
+        args = {'form': form, 'meet': meet}
+
         return render(request, self.template_name, args)
 
     def post(self, request):
-        meetingList = meeting.objects.filter(lect_name=request.user, attended_set=False)
+        meet = meeting.objects.filter(lect_name=request.user, attended_set=False)
         form = EditButtonForm(request.POST)
-        args = {'form': form, 'meetingList': meetingList}
+        args = {'form': form, 'meet': meet}
         if form.is_valid():
-            form.save()
+            meet.attended = form.save()
             form = EditButtonForm()
 
         return render(request, self.template_name, args)
