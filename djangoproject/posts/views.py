@@ -7,6 +7,7 @@ from django.conf import settings
 from posts.forms import HomeForm, EditButtonForm
 from posts.models import meeting
 from django.contrib.auth.mixins import LoginRequiredMixin
+import json
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'posts/index.html'
@@ -42,18 +43,22 @@ class YesView(LoginRequiredMixin, TemplateView):
     template_name = 'posts/confirm_attendance.html'
 
     def get(self, request):
-        meet = meeting.objects.filter(lect_name=request.user, attended_set=False)
+        meet = meeting.objects.filter(lect_name=request.user, attended=False)
         form = EditButtonForm()
         args = {'form': form, 'meet': meet}
 
         return render(request, self.template_name, args)
 
     def post(self, request):
-        meet = meeting.objects.filter(lect_name=request.user, attended_set=False)
+        meet = meeting.objects.filter(lect_name=request.user, attended=False)
+
         form = EditButtonForm(request.POST)
         args = {'form': form, 'meet': meet}
         if form.is_valid():
-            meet.attended = form.save()
+            inst = form.save(commit=False)
+            inst.attended = True
+            inst.save()
+            
             form = EditButtonForm()
 
         return render(request, self.template_name, args)

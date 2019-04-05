@@ -9,10 +9,10 @@ class HomeForm(forms.ModelForm):
 
     class Meta:
         model = meeting
-        fields = ('lect_name', 'm_date', 'm_time', 'descript')
+        fields = ('lect_name', 'm_date', 'm_time', 'descript',)
 
 class EditButtonForm(forms.ModelForm):
-    attended = forms.BooleanField(label='Attended?')
+    attended = forms.BooleanField(label='Attended?', required=False)
 
     class Meta:
         model = meeting
