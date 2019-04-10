@@ -7,11 +7,11 @@ from django.conf import settings
 from posts.forms import HomeForm, EditButtonForm
 from posts.models import meeting
 from django.contrib.auth.mixins import LoginRequiredMixin
-import json
+from django.forms import modelformset_factory
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'posts/index.html'
-
+    
     def get(self, request):
         form = HomeForm()
         entries = meeting.objects.filter(student_name=request.user)
@@ -43,26 +43,16 @@ class YesView(LoginRequiredMixin, TemplateView):
     template_name = 'posts/confirm_attendance.html'
 
     def get(self, request):
-        meet = meeting.objects.filter(lect_name=request.user, attended=False)
-        form = EditButtonForm()
-        args = {'form': form, 'meet': meet}
+        form = modelformset_factory(meeting, fields=('student_name','m_date','m_time', 'descript', 'attended',), extra=0)
+        formset = form(queryset=meeting.objects.filter(lect_name=request.user))
 
-        return render(request, self.template_name, args)
+        return render(request, self.template_name, {'formset' : formset})
 
     def post(self, request):
-        meet = meeting.objects.filter(lect_name=request.user, attended=False)
+        form = modelformset_factory(meeting, fields=('student_name','m_date','m_time', 'descript', 'attended',), extra=0)
+        formset = form(request.POST, queryset=meeting.objects.filter(lect_name=request.user))
+        if formset.is_valid():
+            instances = formset.save()
+            formset = form(queryset=meeting.objects.filter(lect_name=request.user))
+        return render(request, self.template_name, {'formset' : formset})
 
-        form = EditButtonForm(request.POST)
-        args = {'form': form, 'meet': meet}
-        if form.is_valid():
-            inst = form.save(commit=False)
-            inst.attended = True
-            inst.save()
-            
-            form = EditButtonForm()
-
-        return render(request, self.template_name, args)
-
-#MEETING
-#only do write access through the server for security reasons
-    #look into this security issue

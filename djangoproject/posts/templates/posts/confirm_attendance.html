@@ -38,44 +38,34 @@ body {
   <br>
 <div style="overflow-x:auto">
     <table id="myTable">
+      <form method="POST">
+      {% csrf_token %}
+      {{ formset.management_form }}
       <tr>
+        <th><h5><b>Student Name</b></h5></th>
         <th><h5><b>Meeting Date</b></h5></th>
         <th><h5><b>Meeting Time</b></h5></th>
-        <th><h5><b>Lecturer Name</b></h5></th>
-        <th><h5><b></b></h5></th>
+        <th><h5><b>Description</b></h5></th>
+        <th><h5><b>Attended?</b></h5></th>
         <th></th>
       </tr>
-
-      {% for post in meet %}
-      <tr>
-        <td><h5>{{ post.m_date }}</h5></td>
-        <td><h5>{{ post.m_time }}</h5></td>
-        <td><h5>{{ post.descript }}</h5></td>
-        <form method="post" style="text-align: left;">
-            {% csrf_token %}
-            <td><h5>{{ form.as_p }}</h5></td>
-            <td><button type="button" onclick="SelectAttendedRowFunction()" class="btn btn-default" style="background-color: #008CBA"">Attended</button></td>
-        </form>
-        
-      </tr>
+      {% for form in formset.forms %}
+        {{ form.id }}
+        <tr>
+          <td><h5>{{ form.instance.student_name }}</h5></td>
+          <td><h5>{{ form.instance.m_date }}</h5></td>
+          <td><h5>{{ form.instance.m_time }}</h5></td>
+          <td><h5>{{ form.instance.descript }}</h5></td>
+          <td><h5>{{ form.attended }}</h5></td>
+        </tr>
       {% endfor %}
 
     </table>
+    <button type="submit" class="btn btn-default" style="background-color: #008CBA">Submit</button>
+    </form>
 </div>
 
 <script>
-
-function SelectAttendedRowFunction() {
-      // event.target will be the input element.
-      //var c = confirm("are you sure this student attended?");
-      //if(c === true){
-       // var td = event.target.parentNode; 
-      //  var tr = td.parentNode; // the row to be removed
-      //  var num = tr.rowIndex
-      //  tr.parentNode.removeChild(tr);
-      //  var objectToDelete = JSON.parse(num)
-      }
-}
 
 </script>
 
