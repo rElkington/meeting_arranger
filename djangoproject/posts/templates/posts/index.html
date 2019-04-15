@@ -58,42 +58,9 @@ body {
         </div>-->
     </form>
     <br>
-    <button onclick="myFunction()" class="btn btn-default" float="center">Show arranged meetings</button>
-    <br>
-    <div style="overflow-x:auto; display: none" id=myDIV>
-        <table>
-          <tr>
-            <th><h5><b>Meeting Date</b></h5></th>
-            <th><h5><b>Meeting Time</b></h5></th>
-            <th><h5><b>Lecturer Name</b></h5></th>
-            <th><h5><b>Description</b></h5></th>
-            <th></th>
-          </tr>
-        {% for post in entries %}
-          <tr id=myTable>
-            <td><h5>{{ post.m_date }}</h5></td>
-            <td><h5>{{ post.m_time }}</h5></td>
-            <td><h5>{{ post.lect_name }}</h5></td>
-            <td><h5>{{ post.descript }}</h5></td>
-            <td><button class="btn btn-default">Edit</button></td>
-          </tr>
-          {% endfor %}
-        </table>
-    </div>
+    
 
 </div>
 </body>
-
-<script sr="https://cdnjs.cloudflare.come/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
-<script>
-    function myFunction() {
-      var x = document.getElementById("myDIV");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
-</script>
 
 {% endblock %}

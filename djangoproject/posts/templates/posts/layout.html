@@ -30,48 +30,79 @@
               text-decoration: none;
               font-size: 17px;
             }
-            
+
             .topnav a:hover {
-              background-color: #ddd;
-              color: black;
-            }
-            
-            .active {
-              background-color: #2E77BB;
-              color: white;
-            }        
+                font-weight:bold;
+            }  
+                
     </style>
+
+    <script>
+    $('.navigation a').click(function(){
+        $(this).closest('li').addClass('active').siblings().removeClass('active');
+    });
+    </script>
 </head>
 
 <body>
-<!--<ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-        <a class="nav-link disabled" href="http://localhost:8000/posts/">Meeting Arrangeathon 3000</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8000/posts/">Home</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8000/posts/login">Login</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8000/posts/yes">My students</a>
-    </li>
-    <li sstyle="float: right;">
-        <a class="nav-link" href="https://loalhost:8000/admin">Admin</a>
-    </li>
-</ul>-->
 
+{% if user.is_student %}
 <div class="topnav">
-        <a class="active" href="http://localhost:8000/posts">Home</a>
-        <a href="http://localhost:8000/posts/login">Login</a>
-        <a href="http://localhost:8000/posts/yes">My Students</a>
-        <a href="http://localhost:8000/admin">Admin</a>
+    <a onmouseover="hoverColor(this)" id="posts" href="http://localhost:8000/posts/">Home</a>
+    <a id="edit" href="http://localhost:8000/posts/edit">Edit Meetings</a>
+    <a id="login" style="float:right"href="http://localhost:8000/posts/login">Switch Account</a>
 </div>
+{% endif %}
+{% if user.is_teacher %}
+<div class="topnav">
+    <a id="yes" href="http://localhost:8000/posts/yes">My Students</a>
+    <a id="login" style="float:right" href="http://localhost:8000/posts/login">Switch Account</a>
+</div>
+{% endif %}
 
 <div class="container">
     {% block content %}
     {% endblock %}
 </div>
+
+
+<script>
+    if(window.location.href=="http://localhost:8000/posts/"){
+        document.getElementById("posts").style.backgroundColor = 'rgb(46,119,187)';
+        document.getElementById("edit").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("login").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("yes").style.backgroundColor = 'rgb(51,51,51)';
+    }
+    if(window.location.href=="http://localhost:8000/posts/edit"){
+        document.getElementById("posts").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("edit").style.backgroundColor = 'rgb(46,119,187)';
+        document.getElementById("login").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("yes").style.backgroundColor = 'rgb(51,51,51)';
+    }
+    if(window.location.href=="http://localhost:8000/posts/yes"){
+        document.getElementById("posts").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("edit").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("login").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("yes").style.backgroundColor = 'rgb(46,119,187)';
+    }
+    if(window.location.href=="http://localhost:8000/posts/login"){
+        document.getElementById("posts").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("edit").style.backgroundColor = 'rgb(51,51,51)';
+        document.getElementById("login").style.backgroundColor = 'rgb(46,119,187)';
+        document.getElementById("yes").style.backgroundColor = 'rgb(51,51,51)';
+    }
+    
+</script>
+<!--<script>
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+        $(document).ready(function(){
+            $("a").hover(function(){
+                $(this).css("background-color", "#ddd");
+                }, function(){
+                $(this).css("background-color", "#333");
+      });
+    });
+</script>-->
+
 </body>
 </html>
