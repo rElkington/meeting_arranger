@@ -1,0 +1,113 @@
+{% extends 'posts/layout.html' %}
+
+{% block content %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+table {
+    border-collapse: collapse;
+    border-spacing: 10;
+    width: 90%;
+    border: 20px solid #fff;
+    font-size: 40px;
+}    
+        
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 40px;
+}
+
+th {
+  background-color: #2E77BB;
+  color: white;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 160%
+}
+
+</style>
+
+</head>
+<body>
+<div class="container">
+    <h2>Arrange Meeting</h2>
+    <p>Enter the details for any upcoming meetings you may have</p>
+    <br />
+    <form method="post" style="text-align: left;" autocomplete="off">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <!--<button type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>-->
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target='#MyModal'>Submit</button>
+        <div id="MyModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">Are you sure the information about your meeting is correct?</div>
+              <div class="modal-body">
+                  Meeting on <b><span id="date"></span></b> at <b><span id="time"></span></b> with description, <b><span id="description"></span></b>
+              </div>
+              <div class="modal-footer">
+                <button onclick= "myFunction()" type="submit" class="btn btn-default">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+    <br>
+    <p color="green">{{ successMessage }}</p>
+    <br>
+    
+
+</div>
+</body>
+
+<script>
+  var lect_name_input = $('#id_lect_name');
+  var m_date_input = $('#id_m_date');
+  var m_time_input = $('#id_m_time');
+  var descript_input = $("#id_descript");
+  
+  function setName(value){
+    $("#name").html(value)
+  }
+  function setDate(value){
+    $("#date").html(value)
+  }
+  function setTime(value){
+    $("#time").html(value)
+  }
+  function setDescript(value){
+    $("#description").html(value)
+  }
+
+  setName(lect_name_input.val())
+  setDate(m_date_input.val())
+  setTime(m_time_input.val())
+  setDescript(descript_input.val())
+
+  lect_name_input.click(function(){
+    var newName = $(this).val()
+    setName(newName)
+  })
+  m_date_input.keyup(function(){
+    var newDate = $(this).val()
+    setDate(newDate)
+  })
+  m_time_input.keyup(function(){
+    var newTime = $(this).val()
+    setTime(newTime)
+  })
+  descript_input.keyup(function(){
+    var newDescript = $(this).val()
+    setDescript(newDescript)
+  })
+</script>
+
+{% endblock %}

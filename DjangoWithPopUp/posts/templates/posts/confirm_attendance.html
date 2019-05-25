@@ -1,0 +1,98 @@
+{% extends 'posts/layout.html' %}
+
+{% block content %}
+<head>
+<style>
+table {
+    border-collapse: collapse;
+    border-spacing: 10;
+    width: 90%;
+    border: 20px solid #fff;
+    font-size: 60px;
+}    
+        
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 60px;
+}
+
+th {
+  background-color: #2E77BB;
+  color: white;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 160%
+}
+</style>
+</head>
+<body>
+  <br>
+  <h2>My Meetings</h2>
+  <p>Shown below are the records of all the meetings you have had and have been arranged with you. Once a meeting has taken place please tick that the student has attended said meeting.</p>
+  <br />
+  <h3>Outstanding Meetings</h3>
+
+<div style="overflow-x:auto">
+    <table id="myTable">
+      <form method="POST">
+      {% csrf_token %}
+      {{ formset.management_form }}
+      <tr>
+          <th><h5><b>Student Name</b></h5></th>
+          <th><h5><b>Meeting Date</b></h5></th>
+          <th><h5><b>Meeting Time</b></h5></th>
+          <th><h5><b>Description</b></h5></th>
+          <th><h5><b>Attended?</b></h5></th>
+        </tr>
+        {% for form in formset.forms %}
+          {{ form.id }}
+          <tr>
+            <td><h5>{{ form.student_name }}</h5></td>
+            <td><h5>{{ form.m_date }}</h5></td>
+            <td><h5>{{ form.m_time }}</h5></td>
+            <td><h5>{{ form.descript }}</h5></td>
+            <td><h5>{{ form.attended }}</h5></td>
+          </tr>
+        {% endfor %}
+    </table>
+    <button type="submit" class="btn btn-default" style="background-color: #008CBA">Submit</button>
+    </form>
+</div>
+<div style="overflow-x:auto">
+    <h3>Past Meetings</h3>
+        <table id="myTable">
+          <tr>
+            <th><h5><b>Student Name</b></h5></th>
+            <th><h5><b>Meeting Date</b></h5></th>
+            <th><h5><b>Meeting Time</b></h5></th>
+            <th><h5><b>Description</b></h5></th>
+            <th><h5><b>Attended</b></h5></th>
+            <th></th>
+          </tr>
+          {% for i in pastEntries %}
+            <tr>
+              <td><h5>{{ i.student_name }}</h5></td>
+              <td><h5>{{ i.m_date }}</h5></td>
+              <td><h5>{{ i.m_time }}</h5></td>
+              <td><h5>{{ i.descript }}</h5></td>
+              <td><h5>Tick emoji</h5></td> <!-- this is an interessting example of a technically un-informative thing that is good for brain think-->
+              <td></td>
+            </tr>
+          {% endfor %}
+    
+        </table>
+</div>
+
+</body>
+
+{% endblock %}
+
+<!--For instance one may think it would be smart to allow either the student or the staff member to edit things-->
+<!--But we need to force students to do it by not physically allowing lecturers to do it. Conclusion: access must be restricted to design a path through the system-->

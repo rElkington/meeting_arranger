@@ -1,0 +1,94 @@
+{% extends 'posts/layout.html' %}
+
+{% block content %}
+
+<head>
+    <style>
+    table {
+        border-collapse: collapse;
+        border-spacing: 10;
+        width: 90%;
+        border: 20px solid #fff;
+        font-size: 60px;
+    }    
+            
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        font-size: 60px;
+    }
+    
+    th {
+      background-color: #2E77BB;
+      color: white;
+    }
+    
+    tr:hover {background-color:#f5f5f5;}
+    
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 160%
+    }
+    </style>
+    </head>
+    <body>
+      <br>
+      <h2>My Meetings</h2>
+      <p>This page allows you to review past and upcoming meetings you have logged.</p>
+      <br />
+      <h3>Upcoming Meetings</h3>
+      <p>These are your upcoming meetings. To edit any information about them simply enter the correct details into the fields and click submit.</p>
+    <div style="overflow-x:auto">
+        <table id="myTable">
+          <form method="POST">
+          {% csrf_token %}
+          {{ formset.management_form }}
+          <tr>
+            <th><h5><b>Lecturer Name</b></h5></th>
+            <th><h5><b>Meeting Date</b></h5></th>
+            <th><h5><b>Meeting Time</b></h5></th>
+            <th><h5><b>Description</b></h5></th>
+          </tr>
+          {% for form in formset.forms %}
+            {{ form.id }}
+            <tr>
+              <td><h5>{{ form.lect_name }}</h5></td>
+              <td><h5>{{ form.m_date }}</h5></td>
+              <td><h5>{{ form.m_time }}</h5></td>
+              <td><h5>{{ form.descript }}</h5></td>
+            </tr>
+          {% endfor %}
+    
+        </table>
+        <button type="submit" class="btn btn-default" style="background-color: #008CBA">Submit</button>
+        </form>
+        <h3>Past Meetings</h3>
+        <p>These are the meetings that have occured in the past. If there are any errors here please contact the relevant lecturer via email.</p>
+        <table id="myTable">
+          <tr>
+            <th><h5><b>Lecturer Name</b></h5></th>
+            <th><h5><b>Meeting Date</b></h5></th>
+            <th><h5><b>Meeting Time</b></h5></th>
+            <th><h5><b>Description</b></h5></th>
+          </tr>
+          {% for i in pastEntries %}
+            <tr>
+              <td><h5>{{ i.lect_name }}</h5></td>
+              <td><h5>{{ i.m_date }}</h5></td>
+              <td><h5>{{ i.m_time }}</h5></td>
+              <td><h5>{{ i.descript }}</h5></td>
+            </tr>
+          {% endfor %}
+    
+        </table>
+    </div>
+    
+    <script>
+    
+    </script>
+    
+    </body>
+
+{% endblock %}
