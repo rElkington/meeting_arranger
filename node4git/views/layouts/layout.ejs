@@ -45,41 +45,14 @@
 <body>
 
 <div class="topnav">
-    <a onmouseover="hoverColor(this)" id="posts" href="http://localhost:3000/authors/new">Arrange Meeting</a>
-    <a id="edit" href="http://localhost:3000/authors">View Meetings</a>
+    <a onmouseover="hoverColor(this)" id="posts" href="http://localhost:3000/meetings/new">Arrange Meeting</a>
+    <a id="edit" href="http://localhost:3000/meetings">View Meetings</a>
+    <a id="login" href="http://localhost:3000/users/login"> Login </a>
 </div>
 <div class="container"
     <br>
     <%- body %>
 <div>
-
-<script>
-    if(window.location.href=="http://localhost:8000/posts/"){
-        document.getElementById("posts").style.backgroundColor = 'rgb(46,119,187)';
-        document.getElementById("edit").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("login").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("yes").style.backgroundColor = 'rgb(51,51,51)';
-    }
-    if(window.location.href=="http://localhost:8000/posts/edit"){
-        document.getElementById("posts").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("edit").style.backgroundColor = 'rgb(46,119,187)';
-        document.getElementById("login").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("yes").style.backgroundColor = 'rgb(51,51,51)';
-    }
-    if(window.location.href=="http://localhost:8000/posts/yes"){
-        document.getElementById("posts").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("edit").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("login").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("yes").style.backgroundColor = 'rgb(46,119,187)';
-    }
-    if(window.location.href=="http://localhost:8000/posts/login"){
-        document.getElementById("posts").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("edit").style.backgroundColor = 'rgb(51,51,51)';
-        document.getElementById("login").style.backgroundColor = 'rgb(46,119,187)';
-        document.getElementById("yes").style.backgroundColor = 'rgb(51,51,51)';
-    }
-    
-</script>
 
 </body>
 </html>
